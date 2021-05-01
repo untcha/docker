@@ -29,7 +29,7 @@ services:
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN
-      restart: unless-stopped
+    restart: unless-stopped
 
 volumes:
   data:
