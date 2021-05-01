@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  pihole:
+    container_name: pihole
+    hostname: "rpi-pihole"
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: "Europe/Berlin"
+      # sourced from .env
+      WEBPASSWORD: ${PIHOLE_INTERFACE_PASSWORD}
+    volumes:
+      - type: volume
+        source: data
+        target: /etc/pihole/
+        volume:
+          nocopy: true
+      - type: volume
+        source: dnsmasq.d
+        target: /etc/dnsmasq.d/
+        volume:
+          nocopy: true
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+      restart: unless-stopped
+
+volumes:
+  data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=${IP_ADDRESS},rw,nolock"
+      device: ":${SHARE_PATH}/pihole/data"
+  dnsmasq.d:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=${IP_ADDRESS},rw,nolock"
+      device: ":${SHARE_PATH}/pihole/dnsmasq.d"
