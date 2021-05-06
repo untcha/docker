@@ -1,3 +1,6 @@
 .env
 fritzinfluxdb.ini
 grafana.ini
+influxdb.conf
+telegraf.conf
+create-telegraf.iql
