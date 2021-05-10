@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+
+  traefik:
+    image: "traefik:latest"
+    container_name: "traefik"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAINNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=auth@docker"
+      - "traefik.http.middlewares.auth.basicauth.usersfile=/auth/.htpasswd"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - traefik_proxy
+      - default
+    environment:
+      - "DUCKDNS_TOKEN=${DUCKDNS_TOKEN}"
+    volumes:
+      - "./auth/.htpasswd:/auth/.htpasswd"
+      - "./config:/etc/traefik"
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: always
+      
+  whoami:
+    image: "traefik/whoami"
+    container_name: "whoami"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.${DOMAINNAME}`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      
+networks:
+  traefik_proxy:
+    external:
+      name: traefik_proxy
+  default:
+    driver: bridge
