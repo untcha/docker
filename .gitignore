@@ -1,4 +1,6 @@
+.htpasswd
 .env
+acme.json
 fritzinfluxdb.ini
 grafana.ini
 influxdb.conf
