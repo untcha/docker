@@ -1,8 +1,9 @@
 .htpasswd
 .env
 acme.json
+create-telegraf.iql
 fritzinfluxdb.ini
 grafana.ini
 influxdb.conf
+rules.yaml
 telegraf.conf
-create-telegraf.iql
