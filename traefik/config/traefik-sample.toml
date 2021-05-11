@@ -1,0 +1,33 @@
+[log]
+  level = "INFO"
+
+[providers]
+  [providers.docker]
+    exposedByDefault = false
+    endpoint = "unix:///var/run/docker.sock"
+  [providers.file]
+  #  filename = "/etc/traefik/dynamic.yml"
+  #  filename = "/etc/traefik/rules.yml"
+    directory = "/etc/traefik"
+  
+[api]
+#  insecure = true
+  dashboard = true
+  
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+    [entryPoints.web.http]
+      [entryPoints.web.http.redirections]
+        [entryPoints.web.http.redirections.entryPoint]
+          to = "websecure"
+          scheme = "https"
+  [entryPoints.websecure]
+    address = ":443"
+  
+[certificatesResolvers.myresolver.acme]
+  email = "YOUR-MAIL-ADDRESS"
+  storage = "/letsencrypt/acme.json"
+  #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+  [certificatesResolvers.myresolver.acme.dnsChallenge]
+    provider = "duckdns"
