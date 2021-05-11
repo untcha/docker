@@ -1,0 +1,15 @@
+http:
+  routers:
+    router-EXAMPLE:
+      entryPoints:
+        - websecure
+      rule: Host(`EXAMPLE.your.duckdns.org`)
+      service: service-EXAMPLE
+      tls:
+        certResolver: myresolver
+        
+  services:
+    service-EXAMPLE:
+      loadBalancer:
+        servers:
+        - url: "http://IP:PORT"
