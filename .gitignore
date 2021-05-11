@@ -13,3 +13,4 @@ fritzinfluxdb.ini
 .htpasswd
 acme.json
 rules.yaml
+traefik.toml
