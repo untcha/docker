@@ -6,12 +6,10 @@
     exposedByDefault = false
     endpoint = "unix:///var/run/docker.sock"
   [providers.file]
-  #  filename = "/etc/traefik/dynamic.yml"
-  #  filename = "/etc/traefik/rules.yml"
-    directory = "/etc/traefik"
+    filename = "/etc/traefik/dynamic_config.yml"
+    watch = true
   
 [api]
-#  insecure = true
   dashboard = true
   
 [entryPoints]
