@@ -27,7 +27,16 @@ services:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: always
-      
+
+  telegraf:
+    image: "arm32v7/telegraf:latest"
+    container_name: telegraf
+    networks:
+      - default
+    volumes:
+      - "./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+    restart: always
+
   whoami:
     image: "traefik/whoami"
     container_name: "whoami"
