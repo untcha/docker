@@ -20,7 +20,7 @@ services:
         target: /etc/grafana/provisioning
         volume:
           nocopy: true
-      - $HOME/docker/config/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./config/grafana.ini:/etc/grafana/grafana.ini
     environment:
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
