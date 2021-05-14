@@ -11,9 +11,8 @@ services:
       - "67:67/udp"
       - "80:80/tcp"
     environment:
-      TZ: "Europe/Berlin"
-      # sourced from .env
-      WEBPASSWORD: ${PIHOLE_INTERFACE_PASSWORD}
+      - TZ=${TIMEZONE}
+      - WEBPASSWORD=${PIHOLE_INTERFACE_PASSWORD}
     volumes:
       - type: volume
         source: data
