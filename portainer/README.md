@@ -3,7 +3,7 @@
 ## Table of contents
 * Prerequisites
 * Overview
-* Prepare the `.evn`file
+* Prepare the `.evn` file
 * Start Portainer via `docker-compose`
 
 ## Prerequisites
