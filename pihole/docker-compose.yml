@@ -30,6 +30,15 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 
+  telegraf:
+    image: "arm32v7/telegraf:latest"
+    container_name: telegraf
+    networks:
+      - default
+    volumes:
+      - "./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+    restart: always
+
 volumes:
   data:
     driver_opts:
