@@ -18,8 +18,8 @@ services:
         target: /var/lib/influxdb
         volume:
           nocopy: true
-      - $HOME/docker/config/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
-      - $HOME/docker/config/influxdb/init:/docker-entrypoint-initdb.d
+      - ./config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ./config/init:/docker-entrypoint-initdb.d
     environment:
       - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME} # sourced from .env
       - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD} # sourced from .env
@@ -29,7 +29,7 @@ services:
     container_name: telegraf
     networks: [metrics]
     volumes:
-      - $HOME/docker/config/influxdb/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
   chronograf:
     container_name: chronograf
     restart: always
