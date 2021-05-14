@@ -3,6 +3,8 @@
 ## Table of contents
 * Install Docker
 * Install docker-compose
+* `TODO:`git
+* `TODO:`autofs
 * Portainer
 
 ## Install Docker
