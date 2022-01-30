@@ -4,7 +4,7 @@ services:
   pihole:
     container_name: pihole
     hostname: "rpi-pihole"
-    image: pihole/pihole:latest
+    image: pihole/pihole:2021.10.1
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -14,39 +14,10 @@ services:
       - TZ=${TIMEZONE}
       - WEBPASSWORD=${PIHOLE_INTERFACE_PASSWORD}
     volumes:
-      - type: volume
-        source: data
-        target: /etc/pihole/
-        volume:
-          nocopy: true
-      - type: volume
-        source: dnsmasq.d
-        target: /etc/dnsmasq.d/
-        volume:
-          nocopy: true
+      - /etc/pihole:/etc/pihole
+      - /etc/dnsmasq.d:/etc/dnsmasq.d/
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
-
-  telegraf:
-    image: "arm32v7/telegraf:latest"
-    container_name: telegraf
-    networks:
-      - default
-    volumes:
-      - "./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
-    restart: always
-
-volumes:
-  data:
-    driver_opts:
-      type: "nfs4"
-      o: "addr=${IP_ADDRESS},rw,nolock"
-      device: ":${SHARE_PATH}/pihole/data"
-  dnsmasq.d:
-    driver_opts:
-      type: "nfs4"
-      o: "addr=${IP_ADDRESS},rw,nolock"
-      device: ":${SHARE_PATH}/pihole/dnsmasq.d"
