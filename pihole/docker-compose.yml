@@ -27,6 +27,9 @@ services:
       - /etc/pihole:/etc/pihole
       - /etc/dnsmasq.d:/etc/dnsmasq.d/
       - $HOME/data/pihole/adlists.list:/etc/pihole/adlists.list
+      - $HOME/data/pihole/custom.list:/etc/pihole/custom.list
+      - $HOME/data/pihole/regex.list:/etc/pihole/regex.list
+      - $HOME/data/pihole/whitelist.txt:/etc/pihole/whitelist.txt
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
