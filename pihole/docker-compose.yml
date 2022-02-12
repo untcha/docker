@@ -4,7 +4,7 @@ services:
   pihole:
     container_name: pihole
     hostname: "rpi-pihole"
-    image: pihole/pihole:2021.10.1
+    image: pihole/pihole:2022.01.1
     ports:
       - "53:53/tcp"
       - "53:53/udp"
