@@ -11,8 +11,18 @@ services:
       - "67:67/udp"
       - "80:80/tcp"
     environment:
-      - TZ=${TIMEZONE}
-      - WEBPASSWORD=${PIHOLE_INTERFACE_PASSWORD}
+      - TZ=${TZ}
+      - WEBPASSWORD=${WEBPASSWORD}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - DNS1=${DNS1}
+      - DNS2=${DNS2}
+      - ServerIP=${ServerIP}
+      - IPv6=false
+      - TEMPERATUREUNIT=c
+      - WEBUIBOXEDLAYOUT=boxed
+      - WEBTHEME=default-dark
+      - FTLCONF_REPLY_ADDR4=${FTLCONF_REPLY_ADDR4}
+      - FTLCONF_MAXDBDAYS=14
     volumes:
       - /etc/pihole:/etc/pihole
       - /etc/dnsmasq.d:/etc/dnsmasq.d/
