@@ -8,6 +8,7 @@ influxdb.conf
 grafana.ini
 
 fritzinfluxdb.ini
+fritzinfluxdb-k3s.ini
 
 ## Traefik
 .htpasswd
