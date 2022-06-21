@@ -4,49 +4,34 @@ services:
   pihole:
     container_name: pihole
     hostname: "rpi-pihole"
-    image: pihole/pihole:latest
+    image: pihole/pihole:2022.05
     ports:
       - "53:53/tcp"
       - "53:53/udp"
       - "67:67/udp"
       - "80:80/tcp"
     environment:
-      - TZ=${TIMEZONE}
-      - WEBPASSWORD=${PIHOLE_INTERFACE_PASSWORD}
+      - TZ=${TZ}
+      - WEBPASSWORD=${WEBPASSWORD}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - DNS1=${DNS1}
+      - DNS2=${DNS2}
+      - ServerIP=${ServerIP}
+      - IPv6=false
+      - TEMPERATUREUNIT=c
+      - WEBUIBOXEDLAYOUT=boxed
+      - WEBTHEME=default-dark
+      - FTLCONF_REPLY_ADDR4=${FTLCONF_REPLY_ADDR4}
+      - FTLCONF_MAXDBDAYS=14
     volumes:
-      - type: volume
-        source: data
-        target: /etc/pihole/
-        volume:
-          nocopy: true
-      - type: volume
-        source: dnsmasq.d
-        target: /etc/dnsmasq.d/
-        volume:
-          nocopy: true
+      - /etc/pihole:/etc/pihole
+      - /etc/dnsmasq.d:/etc/dnsmasq.d/
+      - $HOME/data/pihole/adlists.list:/etc/pihole/adlists.list
+      - $HOME/data/pihole/custom.list:/etc/pihole/custom.list
+      - $HOME/data/pihole/regex.list:/etc/pihole/regex.list
+      - $HOME/data/pihole/whitelist.txt:/etc/pihole/whitelist.txt
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
+    # cap_add:
+    #   - NET_ADMIN
     restart: unless-stopped
-
-  telegraf:
-    image: "arm32v7/telegraf:latest"
-    container_name: telegraf
-    networks:
-      - default
-    volumes:
-      - "./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
-    restart: always
-
-volumes:
-  data:
-    driver_opts:
-      type: "nfs4"
-      o: "addr=${IP_ADDRESS},rw,nolock"
-      device: ":${SHARE_PATH}/pihole/data"
-  dnsmasq.d:
-    driver_opts:
-      type: "nfs4"
-      o: "addr=${IP_ADDRESS},rw,nolock"
-      device: ":${SHARE_PATH}/pihole/dnsmasq.d"

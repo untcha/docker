@@ -18,7 +18,7 @@ $HOME/docker/portainer/
 └── .env-sample
 ```
 
-## Prepare the `.env' file
+## Prepare the `.env` file
 
 ```bash
 cd ~/docker/portainer
@@ -47,3 +47,11 @@ docker-compose up -d
 ```
 
 To check if everything is running fine you can run `docker ps` and look for a container named `portainer`.
+
+## Update Portainer
+
+```bash
+sudo docker pull portainer/portainer-ce
+sudo docker stop portainer
+sudo docker rm portainer
+```
